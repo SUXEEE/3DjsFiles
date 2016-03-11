@@ -1,13 +1,13 @@
-var w = 1000;
-var h = 1000;
+var w = 500;
+var h = 100;
 //Create SVG Element
 var svg = d3.select("body")
   .append("svg")
   .attr("width", w)
   .attr("height", h);
 
-var width = 960,
-  height = 1160;
+var width = 1600,
+  height = 1600;
 
 var svg = d3.select("body").append("svg")
   .attr("width", width)
@@ -15,11 +15,12 @@ var svg = d3.select("body").append("svg")
   .append('g');
 
 svg.append("circle")
-  .attr("cx", 50)
+  .attr("cx", 100)
   .attr("cy", 50)
   .attr("r", 20)
   .attr("fill", "red")
   .attr("stroke-width", 3)
+  .transition().delay(1500).duration(2000)
   .attr("stroke", "orange");
 document.write("Hello ! 3D.js world!");
 
@@ -55,19 +56,17 @@ d3.csv("../pop2014re.csv", function(data) {
         var jsonState = json.features[j].properties.nam;
         if (jsonState == dataState) {
           json.features[j].properties.value = dataValue;
-          console.log(dataValue);
+          //console.log(dataValue);
           break;
         }
       }
     }
-    var projection,
-      path;
 
+    var projection, path;
     projection = d3.geo.mercator()
-      .scale(2000)
+      .scale(3000)
       .center(d3.geo.centroid(json))
       .translate([width / 2, height / 2]);
-
     path = d3.geo.path().projection(projection);
 
     svg.selectAll('path')
@@ -75,10 +74,14 @@ d3.csv("../pop2014re.csv", function(data) {
       .enter()
       .append('path')
       .attr('d', path)
+      // .onClick("click", function() {
+      //   d3.select(this)
+      //     .style("fill", "cyan")
+      // })
       .style("fill", function(feat) {
         //featは仮引数，json.featuresが入る
         var population = feat.properties.value;
-        console.log(population + feat.properties.nam);
+        //console.log(population + feat.properties.nam);
         if (population > 13000000)
           var c = "darkred";
         else if (population > 5000000)
@@ -91,24 +94,8 @@ d3.csv("../pop2014re.csv", function(data) {
           var c = "yellow";
         return c;
       })
+      .style("stroke", "gray")
+      .style("stroke-width", "0.5px");
 
   });
 });
-
-//  d3.json("../todouhuken.geojson", function(json) {
-//         var projection,
-//         path;
-//
-//         projection = d3.geo.mercator()
-//                .scale(2000)
-//                .center(d3.geo.centroid(json))  // データから中心点を計算
-//                .translate([width / 2, height / 2]);
-//
-//          path = d3.geo.path().projection(projection);
-//
-//          svg.selectAll('path')
-//          .data(json.features)
-//          .enter()
-//          .append('path')
-//          .attr('d', path)
-//  });
