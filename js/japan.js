@@ -89,7 +89,7 @@ d3.csv("../pop2014re.csv", function(data) {
     function click(){
       console.log("nuwaaan");
       //alert("hello!");
-      var p = d3.select(this).selectAll('p');
-      console.log(p);
+      var p = d3.select(this).selectAll('path');
+      console.log(p[0]);
     }
 });
