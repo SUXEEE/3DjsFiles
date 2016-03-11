@@ -1,11 +1,4 @@
-var w = 500;
-var h = 100;
 //Create SVG Element
-var svg = d3.select("body")
-  .append("svg")
-  .attr("width", w)
-  .attr("height", h);
-
 var width = 1600,
   height = 1600;
 
@@ -56,7 +49,6 @@ d3.csv("../pop2014re.csv", function(data) {
         var jsonState = json.features[j].properties.nam;
         if (jsonState == dataState) {
           json.features[j].properties.value = dataValue;
-          //console.log(dataValue);
           break;
         }
       }
@@ -74,13 +66,10 @@ d3.csv("../pop2014re.csv", function(data) {
       .enter()
       .append('path')
       .attr('d', path)
-      // .onClick("click", function() {
-      //   d3.select(this)
-      //     .style("fill", "cyan")
-      // })
-      .style("fill", function(feat) {
-        //featは仮引数，json.featuresが入る
-        var population = feat.properties.value;
+      .on('click',click)
+      .style("fill", function(jfeat) {
+        //jfeatは仮引数，json.featuresが入る
+        var population = jfeat.properties.value;
         //console.log(population + feat.properties.nam);
         if (population > 13000000)
           var c = "darkred";
@@ -96,6 +85,11 @@ d3.csv("../pop2014re.csv", function(data) {
       })
       .style("stroke", "gray")
       .style("stroke-width", "0.5px");
-
   });
+    function click(){
+      console.log("nuwaaan");
+      //alert("hello!");
+      var p = d3.select(this).selectAll('p');
+      console.log(p);
+    }
 });
