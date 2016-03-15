@@ -1,6 +1,7 @@
 //Create SVG Element
 var width = 1600,
-  height = 1600;
+  height = 1600,
+  centered;
 
 var svg = d3.select("body").append("svg")
   .attr("width", width)
@@ -45,10 +46,18 @@ d3.csv("../pop2014re.csv", function(data) {
     for (var i = 0; i < data.length; i++) {
       var dataState = data[i].ken;
       var dataValue = parseFloat(data[i].population);
+      var dataExtra = data[i].extra;
+      var dataTweet1 = data[i].tweet1;
+      var dataTweet2 = data[i].tweet2;
+      var dataTweet3 = data[i].tweet3;
       for (var j = 0; j < json.features.length; j++) {
         var jsonState = json.features[j].properties.nam;
         if (jsonState == dataState) {
           json.features[j].properties.value = dataValue;
+          json.features[j].properties.extra = dataExtra;
+          json.features[j].properties.tweet1 = dataTweet1;
+          json.features[j].properties.tweet2 = dataTweet2;
+          json.features[j].properties.tweet3 = dataTweet3;
           break;
         }
       }
@@ -85,11 +94,35 @@ d3.csv("../pop2014re.csv", function(data) {
       })
       .style("stroke", "gray")
       .style("stroke-width", "0.5px");
-  });
-    function click(){
-      console.log("nuwaaan");
-      //alert("hello!");
+
+    function click(d, i) {
       var p = d3.select(this).selectAll('path');
-      console.log(p[0]);
+      console.log(d.properties.nam+"のtweetの1位は"+d.properties.tweet1);
+      console.log(d.properties.nam+"のtweetの2位は"+d.properties.tweet2);
+      console.log(d.properties.nam+"のtweetの3位は"+d.properties.tweet3);
+      var x, y, k;
+      if (d && centered !== d) {
+        var centroid = path.centroid(d);
+        x = centroid[0];
+        y = centroid[1];
+        k = 4;
+        centered = d;
+      } else {
+        x = width / 2;
+        y = height / 2;
+        k = 1;
+        centered = null;
+      }
+      // svg.selectAll("path")
+      //   .classed("active", centered && function(d) {
+      //     return d === centered;
+      //   });
+      // var prefecture_id = $("path.active").attr('id');
+      // console.log(prefecture_id);
+      // svg.transition()
+      //   .duration(1000)
+      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+      //   .style("stroke-width", 1.5 / k + "px");
     }
+  });
 });
