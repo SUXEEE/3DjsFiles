@@ -16,7 +16,7 @@ svg.append("circle")
   .attr("stroke-width", 3)
   .transition().delay(1500).duration(2000)
   .attr("stroke", "orange");
-document.write("Hello ! 3D.js world!");
+//document.write("Hello ! D3.js world!");
 
 // 色の範囲を指定
 var color = d3.scale.quantize()
@@ -75,7 +75,7 @@ d3.csv("../pop2014re.csv", function(data) {
       .enter()
       .append('path')
       .attr('d', path)
-      .on('click',click)
+      .on('click', click)
       .style("fill", function(jfeat) {
         //jfeatは仮引数，json.featuresが入る
         var population = jfeat.properties.value;
@@ -88,19 +88,24 @@ d3.csv("../pop2014re.csv", function(data) {
           var c = "orange";
         else if (population > 1000000)
           var c = "gold";
-        else
+        else if (population > 750000)
           var c = "yellow";
+        else
+          var c = "blue";
         return c;
       })
       .style("stroke", "gray")
       .style("stroke-width", "0.5px");
 
+
     function click(d, i) {
       var p = d3.select(this).selectAll('path');
-      console.log(d.properties.nam+"のtweetの1位は"+d.properties.tweet1);
-      console.log(d.properties.nam+"のtweetの2位は"+d.properties.tweet2);
-      console.log(d.properties.nam+"のtweetの3位は"+d.properties.tweet3);
+      console.log(p);
+      console.log(d.properties.nam + "のtweetの1位は" + d.properties.tweet1);
+      console.log(d.properties.nam + "のtweetの2位は" + d.properties.tweet2);
+      console.log(d.properties.nam + "のtweetの3位は" + d.properties.tweet3);
       var x, y, k;
+
       if (d && centered !== d) {
         var centroid = path.centroid(d);
         x = centroid[0];
@@ -113,16 +118,33 @@ d3.csv("../pop2014re.csv", function(data) {
         k = 1;
         centered = null;
       }
-      // svg.selectAll("path")
-      //   .classed("active", centered && function(d) {
-      //     return d === centered;
+
+      svg.selectAll("path")
+        .classed("active", centered && function(d) {
+          return d === centered;
+        });
+
+      svg.transition()
+        .duration(750)
+        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
+        .style("stroke-width", 1.5 / k + "px");
+
+      // 都道府県名
+      // svg.selectAll(".place-label")
+      //   .data(d)
+      //   .enter()
+      //   .append("text")
+      //   .attr("font-size", "8px")
+      //   .attr("class", "place-label")
+      //   .attr("transform", function(d) {
+      //     var lat = d.properties.latitude;
+      //     var lng = d.properties.longitude;
+      //     return "translate(" + projection([lng, lat]) + ")";
+      //   })
+      //   .attr("dx", "-1.5em")
+      //   .text(function(d) {
+      //     return d.properties.nam;
       //   });
-      // var prefecture_id = $("path.active").attr('id');
-      // console.log(prefecture_id);
-      // svg.transition()
-      //   .duration(1000)
-      //   .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
-      //   .style("stroke-width", 1.5 / k + "px");
     }
   });
 });
