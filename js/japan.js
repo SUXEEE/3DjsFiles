@@ -100,6 +100,8 @@ d3.csv("../pop2014re.csv", function(data) {
       .style("stroke-width", "0.5px");
 
 
+
+
     function click(d, i) {
       var p = d3.select(this).selectAll('path');
       console.log(p);
@@ -113,7 +115,7 @@ d3.csv("../pop2014re.csv", function(data) {
         var centroid = path.centroid(d);
         x = centroid[0];
         y = centroid[1];
-        k = 4;
+        k = 3;
         centered = d;
 
         //データを上に表示
@@ -128,10 +130,11 @@ d3.csv("../pop2014re.csv", function(data) {
             return path.centroid(d)[1];
           })
           .text(function(d) {
+            console.log(json.features);
             var textArray = [d.properties.nam, d.properties.tweet1, d.properties.tweet2, d.properties.tweet3];
             return textArray;
           })
-
+          .style("font-size", "8px");
       } else {
         x = width / 2;
         y = height / 2;
@@ -139,7 +142,6 @@ d3.csv("../pop2014re.csv", function(data) {
         centered = null;
 
         //データを削除
-        textArray = null;
         svg.selectAll("text").remove();
 
       }
@@ -153,8 +155,6 @@ d3.csv("../pop2014re.csv", function(data) {
         .duration(750)
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
-
-
 
       function leftLinebreak(array) {
         var string = "";
