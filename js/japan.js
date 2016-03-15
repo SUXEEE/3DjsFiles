@@ -97,6 +97,25 @@ d3.csv("../pop2014re.csv", function(data) {
       .style("stroke", "gray")
       .style("stroke-width", "0.5px");
 
+    // // 都道府県名
+    // svg.selectAll(".place-label")
+    //   .data(json.features)
+    //   .enter()
+    //   .append("text")
+    //   .attr("font-size", "8px")
+    //   .attr("class", "place-label")
+    //   .attr("transform", function(d) {
+    //
+    //     console.log();
+    //     var lat = d.properties.cordinates.Array[1];
+    //     var lng = d.properties.longitude;
+    //     return "translate(" + projection([lng, lat]) + ")";
+    //   })
+    //   .attr("dx", "-1.5em")
+    //   .text(function(d) {
+    //     return d.properties.name_local;
+    //   });
+
 
     function click(d, i) {
       var p = d3.select(this).selectAll('path');
@@ -104,6 +123,7 @@ d3.csv("../pop2014re.csv", function(data) {
       console.log(d.properties.nam + "のtweetの1位は" + d.properties.tweet1);
       console.log(d.properties.nam + "のtweetの2位は" + d.properties.tweet2);
       console.log(d.properties.nam + "のtweetの3位は" + d.properties.tweet3);
+      //console.log(d.geometry.coordinates);
       var x, y, k;
 
       if (d && centered !== d) {
@@ -129,22 +149,31 @@ d3.csv("../pop2014re.csv", function(data) {
         .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")scale(" + k + ")translate(" + -x + "," + -y + ")")
         .style("stroke-width", 1.5 / k + "px");
 
-      // 都道府県名
-      // svg.selectAll(".place-label")
-      //   .data(d)
-      //   .enter()
-      //   .append("text")
-      //   .attr("font-size", "8px")
-      //   .attr("class", "place-label")
-      //   .attr("transform", function(d) {
-      //     var lat = d.properties.latitude;
-      //     var lng = d.properties.longitude;
-      //     return "translate(" + projection([lng, lat]) + ")";
-      //   })
-      //   .attr("dx", "-1.5em")
-      //   .text(function(d) {
-      //     return d.properties.nam;
+
+      svg.selectAll("text")
+        .data(json.features)
+        .enter()
+        .append("text")
+        .attr("x", function(d) {
+          return path.centroid(d)[0];
+        })
+        .attr("y", function(d) {
+          return path.centroid(d)[1];
+        })
+        .text(function(d) {
+          var textArray = [d.properties.nam,d.properties.tweet1,d.properties.tweet2,d.properties.tweet3];
+          return textArray;
+        })
+        //.html(leftLinebreak(textArray));
+
+      // function leftLinebreak(array) {
+      //   var string = "";
+      //   array.forEach(function(t, i) {
+      //     string += '<tspan class="line' + i + '" ' + 'y="' + i + 'em" x="0em">' + t + '</tspan>'
       //   });
+      //   return string;
+      // }
+
     }
   });
 });
