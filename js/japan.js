@@ -8,6 +8,8 @@ var svg = d3.select("body").append("svg")
   .attr("height", height)
   .append('g');
 
+var bool = new Boolean(false);
+
 svg.append("circle")
   .attr("cx", 100)
   .attr("cy", 50)
@@ -97,25 +99,6 @@ d3.csv("../pop2014re.csv", function(data) {
       .style("stroke", "gray")
       .style("stroke-width", "0.5px");
 
-    // // 都道府県名
-    // svg.selectAll(".place-label")
-    //   .data(json.features)
-    //   .enter()
-    //   .append("text")
-    //   .attr("font-size", "8px")
-    //   .attr("class", "place-label")
-    //   .attr("transform", function(d) {
-    //
-    //     console.log();
-    //     var lat = d.properties.cordinates.Array[1];
-    //     var lng = d.properties.longitude;
-    //     return "translate(" + projection([lng, lat]) + ")";
-    //   })
-    //   .attr("dx", "-1.5em")
-    //   .text(function(d) {
-    //     return d.properties.name_local;
-    //   });
-
 
     function click(d, i) {
       var p = d3.select(this).selectAll('path');
@@ -132,11 +115,33 @@ d3.csv("../pop2014re.csv", function(data) {
         y = centroid[1];
         k = 4;
         centered = d;
+
+        //データを上に表示
+        svg.selectAll("text")
+          .data(json.features)
+          .enter()
+          .append("text")
+          .attr("x", function(d) {
+            return path.centroid(d)[0];
+          })
+          .attr("y", function(d) {
+            return path.centroid(d)[1];
+          })
+          .text(function(d) {
+            var textArray = [d.properties.nam, d.properties.tweet1, d.properties.tweet2, d.properties.tweet3];
+            return textArray;
+          })
+
       } else {
         x = width / 2;
         y = height / 2;
         k = 1;
         centered = null;
+
+        //データを削除
+        textArray = null;
+        svg.selectAll("text").remove();
+
       }
 
       svg.selectAll("path")
@@ -150,29 +155,14 @@ d3.csv("../pop2014re.csv", function(data) {
         .style("stroke-width", 1.5 / k + "px");
 
 
-      svg.selectAll("text")
-        .data(json.features)
-        .enter()
-        .append("text")
-        .attr("x", function(d) {
-          return path.centroid(d)[0];
-        })
-        .attr("y", function(d) {
-          return path.centroid(d)[1];
-        })
-        .text(function(d) {
-          var textArray = [d.properties.nam,d.properties.tweet1,d.properties.tweet2,d.properties.tweet3];
-          return textArray;
-        })
-        //.html(leftLinebreak(textArray));
 
-      // function leftLinebreak(array) {
-      //   var string = "";
-      //   array.forEach(function(t, i) {
-      //     string += '<tspan class="line' + i + '" ' + 'y="' + i + 'em" x="0em">' + t + '</tspan>'
-      //   });
-      //   return string;
-      // }
+      function leftLinebreak(array) {
+        var string = "";
+        array.forEach(function(t, i) {
+          string += '<tspan class="line' + i + '" ' + 'y="' + i + 'em" x="0em">' + t + '</tspan>'
+        });
+        return string;
+      }
 
     }
   });
