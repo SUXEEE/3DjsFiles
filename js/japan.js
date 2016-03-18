@@ -35,7 +35,7 @@ var color = d3.scale.quantize()
     "rgb(0,51,102)"
   ]);
 
-d3.csv("../pop2014re.csv", function(data) {
+d3.csv("../tweetData/pop2014re.csv", function(data) {
   color.domain([
     d3.min(data, function(d) {
       return Number(d.value);
@@ -44,7 +44,7 @@ d3.csv("../pop2014re.csv", function(data) {
       return Number(d.value);
     })
   ]);
-  d3.json("../todouhuken.geojson", function(json) {
+  d3.json("../json/todouhuken.geojson", function(json) {
     for (var i = 0; i < data.length; i++) {
       var dataState = data[i].ken;
       var dataValue = parseFloat(data[i].population);
