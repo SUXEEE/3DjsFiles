@@ -49,7 +49,7 @@ d3.csv(dataDir, function(data) {
   d3.json(geoJsonDir, function(json) {
     for (var i = 0; i < data.length; i++) {
       var dataState = data[i].ken;
-      var dataValue = parseFloat(data[i].population);
+      var dataValue = parseFloat(data[i].tweetAll);
       var dataExtra = data[i].extra;
       var dataTweet1 = data[i].tweet1;
       var dataTweet2 = data[i].tweet2;
