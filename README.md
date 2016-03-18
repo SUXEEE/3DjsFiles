@@ -4,8 +4,8 @@
 
 ## python2
 
-```python -m http.server 8888```
+```python -m SimpleHTTPServer 8888```
 
 ## python3
 
-```python -m SimpleHTTPServer```
+```python -m http.server 8888```
