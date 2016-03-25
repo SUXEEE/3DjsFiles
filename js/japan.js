@@ -9,8 +9,9 @@ var svg = d3.select("body").append("svg")
   .append('g');
 
 var bool = new Boolean(false);
-var dataDir = "../tweetData/pop2014re.csv";
-var geoJsonDir = "../json/todouhuken.geojson";
+//var dataDir = "../tweetData/pop2014re.csv";
+var dataDir = "../tweetData/tweetOfPrefecture.csv";
+var geoJsonDir = "../json/todouhuken-kanji.geojson";
 
 svg.append("circle")
   .attr("cx", 100)
