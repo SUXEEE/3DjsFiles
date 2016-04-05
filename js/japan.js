@@ -58,7 +58,7 @@ d3.csv(dataDir, function(data) {
       for (var j = 0; j < json.features.length; j++) {
         var jsonState = json.features[j].properties.nam;
         if (jsonState == dataState) {
-          json.features[j].properties.value = dataValue;
+          json.features[j].properties.tweetAll = dataValue;
           json.features[j].properties.extra = dataExtra;
           json.features[j].properties.tweet1 = dataTweet1;
           json.features[j].properties.tweet2 = dataTweet2;
@@ -134,7 +134,7 @@ d3.csv(dataDir, function(data) {
           })
           .text(function(d) {
             console.log(json.features);
-            var textArray = [d.properties.nam, d.properties.tweet1, d.properties.tweet2, d.properties.tweet3];
+            var textArray = [d.properties.nam,d.properties.tweetAll, d.properties.tweet1, d.properties.tweet2, d.properties.tweet3];
             return textArray;
           })
           .style("font-size", "8px");
