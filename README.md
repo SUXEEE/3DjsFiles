@@ -1,7 +1,7 @@
 #JPTweetD3
 
 [Local Server](http://localhost:8888/)
-![This is a developing image](https://github.com/SUXEEE/JPTweetD3/blob/master/etc/testimage.gif)
+![This is a developing image](https://github.com/SUXEEE/JPTweetD3/blob/master/etc/this_is_a_test_image.gif)
 
 ## python2
 
