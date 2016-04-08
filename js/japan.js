@@ -85,15 +85,15 @@ d3.csv(dataDir, function(data) {
         //jfeatは仮引数，json.featuresが入る
         var population = jfeat.properties.tweetAll;
         //console.log(population + feat.properties.nam);
-        if (population > 13)
+        if (population > 11)
           var c = "darkred";
-        else if (population > 11)
-          var c = "orangered";
         else if (population > 7)
-          var c = "orange";
+          var c = "orangered";
         else if (population > 5)
-          var c = "gold";
+          var c = "orange";
         else if (population > 3)
+          var c = "gold";
+        else if (population > 1)
           var c = "yellow";
         else
           var c = "green";
