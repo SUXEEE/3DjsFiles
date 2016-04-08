@@ -5,7 +5,7 @@
 
 ## python2
 
-```python -m SimpleHTTPServer 8888```
+```python -m SimpleHTTPServer```
 
 ## python3
 
