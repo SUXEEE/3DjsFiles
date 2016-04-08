@@ -10,7 +10,7 @@ var svg = d3.select("body").append("svg")
 
 var bool = new Boolean(false);
 //var dataDir = "../tweetData/pop2014re.csv";
-var dataDir = "../tweetData/tweetOfPrefecture.csv";
+var dataDir = "../tweetData/tweetOfPrefectureKai.csv";
 var geoJsonDir = "../json/todouhuken-kanji.geojson";
 
 svg.append("circle")
@@ -59,7 +59,7 @@ d3.csv(dataDir, function(data) {
         var jsonState = json.features[j].properties.nam;
         if (jsonState == dataState) {
           json.features[j].properties.tweetAll = dataValue;
-          json.features[j].properties.extra = dataExtra;
+          //json.features[j].properties.extra = dataExtra;
           json.features[j].properties.tweet1 = dataTweet1;
           json.features[j].properties.tweet2 = dataTweet2;
           json.features[j].properties.tweet3 = dataTweet3;
@@ -83,20 +83,20 @@ d3.csv(dataDir, function(data) {
       .on('click', click)
       .style("fill", function(jfeat) {
         //jfeatは仮引数，json.featuresが入る
-        var population = jfeat.properties.value;
+        var population = jfeat.properties.tweetAll;
         //console.log(population + feat.properties.nam);
-        if (population > 13000000)
+        if (population > 13)
           var c = "darkred";
-        else if (population > 5000000)
+        else if (population > 11)
           var c = "orangered";
-        else if (population > 2500000)
+        else if (population > 7)
           var c = "orange";
-        else if (population > 1000000)
+        else if (population > 5)
           var c = "gold";
-        else if (population > 750000)
+        else if (population > 3)
           var c = "yellow";
         else
-          var c = "blue";
+          var c = "green";
         return c;
       })
       .style("stroke", "gray")
